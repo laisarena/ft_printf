@@ -2,7 +2,7 @@ NAME = libftprintf.a
 
 SRCS = ft_printf.c\
 
-OBJS = ${SRCS:.C=o}
+OBJS = ${SRCS:.c=.o}
 
 .c.o:
 	gcc -Wall -Wextra -Werror -c $< -o ${<:.c=.o}
