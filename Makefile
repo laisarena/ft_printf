@@ -30,4 +30,7 @@ re:	fclean all
 test:
 	gcc -Wall -Wextra -Werror main.c -L. -lftprintf -I. -L$(PATH_LIBFT) -lft -I$(PATH_LIBFT) && ./a.out
 
+testg:
+	gcc -g -Wall -Wextra -Werror main.c ft_printf.c -L. -lftprintf -I. -L$(PATH_LIBFT) -lft -I$(PATH_LIBFT) && ./a.out
+
 .PHONY: all clean fclean re
