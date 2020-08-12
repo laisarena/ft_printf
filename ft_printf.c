@@ -1,4 +1,4 @@
-#include <stdarg.h>
+#include "libftprintf.h"
 
 typedef	struct
 {
@@ -32,9 +32,11 @@ int	ft_printf(const char *format, ...)
 	while (*format)
 	{
 		if (*format == '%')
-		{
-			
+		{	
 		}
+		else
+			ft_putchar_fd(*format, 1);
+	format++;
 	}	
 	va_end(args);
 	return (0);
