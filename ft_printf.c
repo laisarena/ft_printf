@@ -39,9 +39,12 @@ t_flags ft_checkflag(char *strflag, va_list args)
 
 void 	ft_c(va_list args, t_flags flag)
 {
+	if (flag.justify)
+		ft_putchar_fd(va_arg(args, int), 1);	
 	while (flag.width != 0 &&  flag.width-- != 1)
-		ft_putchar_fd(' ',1);	
-	ft_putchar_fd(va_arg(args, int), 1);	
+		ft_putchar_fd(' ',1);
+	if (!flag.justify)	
+		ft_putchar_fd(va_arg(args, int), 1);	
 }
 
 static int ft_isconversion (char c)
