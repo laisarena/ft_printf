@@ -2,27 +2,45 @@
 
 typedef	struct
 {
-	int	width;
-	int	precision;
+	unsigned int	justify;
+	unsigned int	width;
+	unsigned int	precision;
 }	t_flags;
 
-int	ft_checkflag(char c)
+void	ft_setflags(t_flags *flag)
 {
-	if (c == '-')
-		return ('-');
-	if (c == '+')
-		return ('+');
-	if (c == ' ')
-		return (' ');
-	if (c == '#')
-		return ('#');
-	if (c == '0')
-		return ('0');
-	return (0);
+	flag->justify = 0;
+	flag->width = 0;
+	flag->precision = 0;
 }
 
-void 	ft_c(va_list args)
+t_flags ft_checkflag(char *strflag, va_list args)
 {
+	t_flags flag;
+
+	ft_setflags(&flag);
+	if (*strflag == '-')
+	{
+		flag.justify = 1;
+		strflag++;
+	}		
+	if (*strflag == '*')
+	{
+		flag.width = va_arg(args, int);
+		strflag++;
+	}
+	while (ft_isdigit(*strflag))
+	{
+		flag.width = flag.width * 10 + *strflag - '0';
+		strflag++;
+	}
+	return(flag);
+}
+
+void 	ft_c(va_list args, t_flags flag)
+{
+	while (flag.width != 0 &&  flag.width-- != 1)
+		ft_putchar_fd(' ',1);	
 	ft_putchar_fd(va_arg(args, int), 1);	
 }
 
@@ -47,12 +65,14 @@ static int	ft_conversionposition(const char *s)
 int ft_printarg(const char *format, va_list args)
 {
 	int position;
+	t_flags flag;
+
 	if (!(position = ft_conversionposition(format++)))
 		return (0);
-	ft_substr( format, 0, position);
+	flag = ft_checkflag(ft_substr( format, 0, position), args);
 	format += position - 1;
 	if (*format == 'c')
-		ft_c(args);
+		ft_c(args, flag);
 	if (*format == 's')
 		return (0);
 	if (*format == 'p')
