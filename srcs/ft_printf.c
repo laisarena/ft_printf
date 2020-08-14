@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/14 11:25:29 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/14 13:22:38 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ int		ft_printarg(const char *format, va_list args)
 		ft_s(args, flag);
 	if (*format == 'p')
 		return (0);
-	if (*format == 'd')
-		return (0);
-	if (*format == 'i')
+	if (*format == 'd' || *format == 'i')
+		ft_di(args, flag);
+	if (*format == 'u')
 		return (0);
 	return (position);
 }

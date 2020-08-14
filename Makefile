@@ -6,7 +6,7 @@
 #    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/08/13 17:08:26 by laisarena        ###   ########.fr        #
+#    Updated: 2020/08/14 13:19:57 by laisarena        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ PATH_SRCS = ./srcs/
 SRCS = ft_printf.c\
 	ft_c.c\
 	ft_s.c\
+	ft_di.c\
 
 OBJS = $(addprefix $(PATH_SRCS),$(SRCS:.c=.o))
 
