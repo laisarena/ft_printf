@@ -6,7 +6,7 @@
 #    By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 12:16:07 by lfrasson          #+#    #+#              #
-#    Updated: 2020/03/03 15:44:11 by lfrasson         ###   ########.fr        #
+#    Updated: 2020/08/13 15:39:29 by laisarena        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ OBJS = ${SRCS:.c=.o}
 OBJS_BONUS = ${SRCS_BONUS:.c=.o}
 
 .c.o:
-	gcc -Wall -Wextra -Werror -c $< -o ${<:.c=.o}
+	gcc -Wall -Wextra -Werror -c $< -o ${<:.c=.o} -I../includes
 
 $(NAME): ${OBJS}
 		ar rc $(NAME) ${OBJS}
