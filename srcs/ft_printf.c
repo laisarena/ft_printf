@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/14 10:28:08 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/14 11:25:29 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_flags	ft_checkflag(char *strflag, va_list args)
 		strflag++;
 	}
 	if (*strflag == '.')
-	{	
+	{
 		strflag++;
 		if (*strflag == '*')
 		{
@@ -74,10 +74,10 @@ static int	ft_conversionposition(const char *s)
 	return (position);
 }
 
-int	ft_printarg(const char *format, va_list args)
+int		ft_printarg(const char *format, va_list args)
 {
-	int position;
-	t_flags flag;
+	int		position;
+	t_flags	flag;
 
 	if (!(position = ft_conversionposition(format++)))
 		return (0);
@@ -96,9 +96,9 @@ int	ft_printarg(const char *format, va_list args)
 	return (position);
 }
 
-int	ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
-	int	position;
+	int		position;
 	va_list	args;
 
 	va_start(args, format);
