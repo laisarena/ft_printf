@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/13 17:07:25 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/14 10:28:08 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,20 @@ t_flags	ft_checkflag(char *strflag, va_list args)
 	{
 		flag.width = flag.width * 10 + *strflag - '0';
 		strflag++;
+	}
+	if (*strflag == '.')
+	{	
+		strflag++;
+		if (*strflag == '*')
+		{
+			flag.precision = va_arg(args, int);
+			strflag++;
+		}
+		while (ft_isdigit(*strflag))
+		{
+			flag.precision = flag.precision * 10 + *strflag - '0';
+			strflag++;
+		}
 	}
 	return (flag);
 }
