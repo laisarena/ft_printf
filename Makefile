@@ -6,7 +6,7 @@
 #    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/08/14 13:19:57 by laisarena        ###   ########.fr        #
+#    Updated: 2020/08/14 18:06:58 by laisarena        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,6 @@ re:	fclean all
 test:
 	gcc -Wall -Wextra -Werror ./testes/*.c -L. -lftprintf  -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
 testg:
-	gcc -g -Wall -Wextra -Werror ./testes/*.c ft_printf.c -L. -lftprintf -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
+	gcc -g -Wall -Wextra -Werror ./testes/*.c ./srcs/*.c -L. -lftprintf -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
 
 .PHONY: all clean fclean re
