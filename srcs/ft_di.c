@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 13:18:03 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/14 18:54:31 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/15 17:01:19 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_printdi(unsigned int precision, unsigned int sign, char *str)
 	ft_putstr_fd(str, 1);
 }
 
-void	ft_di(va_list args, t_flags flag)
+void		ft_di(va_list args, t_flags flag)
 {
 	unsigned int	len;
 	unsigned int	sign;
@@ -30,7 +30,6 @@ void	ft_di(va_list args, t_flags flag)
 	str = ft_itoa(va_arg(args, int));
 	len = ft_strlen(str);
 	sign = 0;
-
 	if (*str == '-')
 		sign = 1;
 	str = ft_substr(str, sign, len - sign);
@@ -40,8 +39,7 @@ void	ft_di(va_list args, t_flags flag)
 		flag.precision = 0;
 	if (flag.justify)
 		ft_printdi(flag.precision, sign, str);
-	while (flag.width > len + flag.precision &&
-			flag.width != 0 && flag.width-- != 1)
+	while (flag.width > len + flag.precision && flag.width != 0 && flag.width-- != 1)
 	{
 		if (flag.zero && !flag.justify)
 			ft_putchar_fd('0', 1);

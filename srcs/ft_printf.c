@@ -6,61 +6,11 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/15 12:47:18 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/15 17:00:06 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-
-void	ft_setflags(t_flags *flag)
-{
-	flag->zero = 0;
-	flag->justify = 0;
-	flag->width = 0;
-	flag->precision = 0;
-}
-
-t_flags	ft_checkflag(char *strflag, va_list args)
-{
-	t_flags flag;
-
-	ft_setflags(&flag);
-	if (*strflag == '0')
-	{
-		flag.zero = 1;
-		strflag++;
-	}
-	if (*strflag == '-')
-	{
-		flag.justify = 1;
-		strflag++;
-	}
-	if (*strflag == '*')
-	{
-		flag.width = va_arg(args, int);
-		strflag++;
-	}
-	while (ft_isdigit(*strflag))
-	{
-		flag.width = flag.width * 10 + *strflag - '0';
-		strflag++;
-	}
-	if (*strflag == '.')
-	{
-		strflag++;
-		if (*strflag == '*')
-		{
-			flag.precision = va_arg(args, int);
-			strflag++;
-		}
-		while (ft_isdigit(*strflag))
-		{
-			flag.precision = flag.precision * 10 + *strflag - '0';
-			strflag++;
-		}
-	}
-	return (flag);
-}
 
 static int	ft_isconversion(char c)
 {
@@ -80,7 +30,7 @@ static int	ft_conversionposition(const char *s)
 	return (position);
 }
 
-int		ft_printarg(const char *format, va_list args)
+int			ft_printarg(const char *format, va_list args)
 {
 	int		position;
 	t_flags	flag;
@@ -102,7 +52,7 @@ int		ft_printarg(const char *format, va_list args)
 	return (position);
 }
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	int		position;
 	va_list	args;

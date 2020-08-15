@@ -6,7 +6,7 @@
 #    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/08/15 12:51:58 by laisarena        ###   ########.fr        #
+#    Updated: 2020/08/15 16:15:36 by laisarena        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ PATH_LIBFT = ./libft
 PATH_SRCS = ./srcs/
 
 SRCS = ft_printf.c\
+	ft_flags.c\
 	ft_c.c\
 	ft_s.c\
 	ft_di.c\
