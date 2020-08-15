@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 13:18:03 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/14 18:25:00 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/14 18:54:31 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,12 @@ void	ft_di(va_list args, t_flags flag)
 		ft_printdi(flag.precision, sign, str);
 	while (flag.width > len + flag.precision &&
 			flag.width != 0 && flag.width-- != 1)
-		ft_putchar_fd(' ', 1);
+	{
+		if (flag.zero && !flag.justify)
+			ft_putchar_fd('0', 1);
+		else
+			ft_putchar_fd(' ', 1);
+	}
 	if (!flag.justify)
 		ft_printdi(flag.precision, sign, str);
 }

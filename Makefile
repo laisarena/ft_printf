@@ -6,7 +6,7 @@
 #    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/08/14 18:06:58 by laisarena        ###   ########.fr        #
+#    Updated: 2020/08/15 12:51:58 by laisarena        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,12 @@ SRCS = ft_printf.c\
 
 OBJS = $(addprefix $(PATH_SRCS),$(SRCS:.c=.o))
 
+FLAGS = -Wall -Wextra -Werror  
 
 #OBJS = ${SRCS:.c=.o}
 
 .c.o:
-	gcc -Wall -Wextra -Werror -c $< -o ${<:.c=.o} -I$(PATH_INCLUDE) 
+	gcc $(FLAGS) -c $< -o ${<:.c=.o} -I$(PATH_INCLUDE) 
 
 $(NAME): ${OBJS}
 	make -C $(PATH_LIBFT)
@@ -50,8 +51,10 @@ fclean: clean
 re:	fclean all
 
 test:
-	gcc -Wall -Wextra -Werror ./testes/*.c -L. -lftprintf  -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
+	gcc $(FLAGS) ./testes/*.c -L. -lftprintf  -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
 testg:
-	gcc -g -Wall -Wextra -Werror ./testes/*.c ./srcs/*.c -L. -lftprintf -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
+	gcc -g $(FLAGS) ./testes/*.c ./srcs/*.c -L. -lftprintf -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
 
+testf:
+	gcc  ./testes/*.c -L. -lftprintf  -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
 .PHONY: all clean fclean re

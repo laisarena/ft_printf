@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 13:19:50 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/14 13:20:38 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/14 18:45:49 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 typedef	struct
 {
+	unsigned int	zero;
 	unsigned int	justify;
 	unsigned int	width;
 	unsigned int	precision;
