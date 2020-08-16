@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_di.c                                            :+:      :+:    :+:   */
+/*   ft_integers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/14 13:18:03 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/15 18:03:03 by laisarena        ###   ########.fr       */
+/*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
+/*   Updated: 2020/08/16 15:41:34 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static void	ft_printdi(unsigned int precision, unsigned int sign, char *str)
+static void	ft_printstr(unsigned int precision, unsigned int sign, char *str)
 {
 	if (sign)
 		ft_putchar_fd('-', 1);
@@ -21,22 +21,20 @@ static void	ft_printdi(unsigned int precision, unsigned int sign, char *str)
 	ft_putstr_fd(str, 1);
 }
 
-void		ft_di(va_list args, t_flags flag)
+static void	ft_printflag(char *str, t_flags flag)
 {
 	unsigned int	len;
 	unsigned int	sign;
-	char			*str;
 
-	str = ft_itoa(va_arg(args, int));
 	len = ft_strlen(str);
 	sign = (*str == '-') ? 1 : 0;
-	str = ft_substr(str, sign, len - sign);
+	str = (*str == '-') ? str + 1 : str;
 	if (flag.precision > len - sign)
 		flag.precision = flag.precision - len + sign;
 	else
 		flag.precision = 0;
 	if (flag.justify)
-		ft_printdi(flag.precision, sign, str);
+		ft_printstr(flag.precision, sign, str);
 	while (flag.width > len + flag.precision
 			&& flag.width != 0 && flag.width-- != 1)
 	{
@@ -46,5 +44,20 @@ void		ft_di(va_list args, t_flags flag)
 			ft_putchar_fd(' ', 1);
 	}
 	if (!flag.justify)
-		ft_printdi(flag.precision, sign, str);
+		ft_printstr(flag.precision, sign, str);
+}
+
+void		ft_integers(va_list args, t_flags flag, char conversion)
+{
+	char			*str;
+
+	if (conversion == 'd' || conversion == 'i')
+		str = ft_itoa(va_arg(args, int));
+	if (conversion == 'u')
+		str = ft_utoa(va_arg(args, unsigned int));
+	if (conversion == 'x')
+		str = ft_utoa_base(va_arg(args, unsigned int), "0123456789abcdef");
+	if (conversion == 'X')
+		str = ft_utoa_base(va_arg(args, unsigned int), "0123456789ABCDEF");
+	ft_printflag(str, flag);
 }

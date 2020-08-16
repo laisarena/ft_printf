@@ -6,13 +6,14 @@
 /*   By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:43:58 by lfrasson          #+#    #+#             */
-/*   Updated: 2020/02/18 18:06:35 by lfrasson         ###   ########.fr       */
+/*   Updated: 2020/08/16 15:33:57 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Function that converts the string argument str to an integer (type int)
+/*
+** Function that converts the string argument str to an integer (type int)
 ** Parameters:
 **	str − This is the string representation of an integral number.
 ** Return Value:

@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_utoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/22 15:19:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2020/08/16 15:34:29 by laisarena        ###   ########.fr       */
+/*   Created: 2020/08/16 14:41:00 by laisarena         #+#    #+#             */
+/*   Updated: 2020/08/16 15:31:26 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
-** The Function converts an integer value to a null-terminated string.
+** The Function converts an unsigned integer value to a null-terminated string.
 ** Parameters:
 **	n − Value to be converted to a string.
 ** Return Value:
-**	A pointer to the resulting null-terminated string with the converted number.
-** Details
-**	If value is negative, the resulting string is preceded with a minus
-**	sign (-).
+**	A pointer to the resulting null-terminated string with the converted number
 */
 
-static int	ft_countdigits(long l, int sign)
+static int	ft_countdigits(unsigned int l)
 {
 	int	count;
 
 	count = 1;
-	if (sign == -1)
-		count++;
 	while (l >= 10)
 	{
 		l = l / 10;
@@ -38,29 +33,19 @@ static int	ft_countdigits(long l, int sign)
 	return (count);
 }
 
-char		*ft_itoa(int n)
+char		*ft_utoa(unsigned int n)
 {
-	long	l;
 	int		digits;
-	int		sign;
 	char	*str;
 
-	sign = 1;
-	l = n;
-	if (l < 0)
-		sign = -1;
-	l = sign * l;
-	digits = ft_countdigits(l, sign);
+	digits = ft_countdigits(n);
 	if (!(str = malloc((digits + 1) * sizeof(char))))
 		return (NULL);
 	str[digits] = '\0';
 	while (digits > 0)
 	{
-		if (digits == 1 && sign == -1)
-			str[0] = '-';
-		else
-			str[digits - 1] = l % 10 + '0';
-		l = l / 10;
+		str[digits - 1] = n % 10 + '0';
+		n = n / 10;
 		digits--;
 	}
 	return (str);
