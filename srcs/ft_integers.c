@@ -6,27 +6,31 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/16 15:41:34 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/16 17:11:59 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static void	ft_printstr(unsigned int precision, unsigned int sign, char *str)
+static void	ft_printstr(unsigned int pr, unsigned int sign, char *str, char cnv)
 {
 	if (sign)
 		ft_putchar_fd('-', 1);
-	while (precision--)
+	if (cnv == 'p')
+		ft_putstr_fd("0x", 1);
+	while (pr--)
 		ft_putchar_fd('0', 1);
 	ft_putstr_fd(str, 1);
 }
 
-static void	ft_printflag(char *str, t_flags flag)
+static void	ft_printflag(char *str, t_flags flag, char conversion)
 {
 	unsigned int	len;
 	unsigned int	sign;
 
 	len = ft_strlen(str);
+	if (conversion == 'p')
+		len = len + 2;
 	sign = (*str == '-') ? 1 : 0;
 	str = (*str == '-') ? str + 1 : str;
 	if (flag.precision > len - sign)
@@ -34,7 +38,7 @@ static void	ft_printflag(char *str, t_flags flag)
 	else
 		flag.precision = 0;
 	if (flag.justify)
-		ft_printstr(flag.precision, sign, str);
+		ft_printstr(flag.precision, sign, str, conversion);
 	while (flag.width > len + flag.precision
 			&& flag.width != 0 && flag.width-- != 1)
 	{
@@ -44,7 +48,7 @@ static void	ft_printflag(char *str, t_flags flag)
 			ft_putchar_fd(' ', 1);
 	}
 	if (!flag.justify)
-		ft_printstr(flag.precision, sign, str);
+		ft_printstr(flag.precision, sign, str, conversion);
 }
 
 void		ft_integers(va_list args, t_flags flag, char conversion)
@@ -59,5 +63,7 @@ void		ft_integers(va_list args, t_flags flag, char conversion)
 		str = ft_utoa_base(va_arg(args, unsigned int), "0123456789abcdef");
 	if (conversion == 'X')
 		str = ft_utoa_base(va_arg(args, unsigned int), "0123456789ABCDEF");
-	ft_printflag(str, flag);
+	if (conversion == 'p')
+		str = ft_ultoa_base(va_arg(args, unsigned long), "0123456789abcdef");
+	ft_printflag(str, flag, conversion);
 }

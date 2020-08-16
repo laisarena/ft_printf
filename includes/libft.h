@@ -6,7 +6,7 @@
 /*   By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 10:20:36 by lfrasson          #+#    #+#             */
-/*   Updated: 2020/08/16 14:54:31 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/16 16:33:33 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char				*ft_itoa(int n);
 char				*ft_utoa(unsigned int n);
 char				*ft_itoa_base(int n, char *base);
 char				*ft_utoa_base(unsigned int n, char *base);
+char				*ft_ultoa_base(unsigned long n, char *base);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int					ft_toupper(int c);
 int					ft_tolower(int c);
