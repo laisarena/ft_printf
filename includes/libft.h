@@ -6,7 +6,7 @@
 /*   By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 10:20:36 by lfrasson          #+#    #+#             */
-/*   Updated: 2020/03/03 15:35:39 by lfrasson         ###   ########.fr       */
+/*   Updated: 2020/08/15 22:49:04 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char				*ft_strtrim(char const *s1, char const *set);
 size_t				ft_strlen(const char *s);
 char				**ft_split(char const *s, char c);
 char				*ft_itoa(int n);
+char				*ft_itoa_base(int n, char *base);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int					ft_toupper(int c);
 int					ft_tolower(int c);

@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/15 17:00:06 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/15 18:23:21 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static int	ft_isconversion(char c)
 {
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i')
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' ||
+			c == 'x' || c == 'X')
 		return (1);
 	return (0);
 }
@@ -48,7 +49,7 @@ int			ft_printarg(const char *format, va_list args)
 	if (*format == 'd' || *format == 'i')
 		ft_di(args, flag);
 	if (*format == 'u')
-		return (0);
+		ft_di(args, flag);
 	return (position);
 }
 
