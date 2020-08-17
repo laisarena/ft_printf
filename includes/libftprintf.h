@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 13:19:50 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/16 10:49:48 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/17 16:01:04 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ typedef	struct
 }					t_flags;
 int					ft_printf(const char *format, ...);
 t_flags				ft_checkflag(char *strflag, va_list args);
-void				ft_c(va_list args, t_flags flag);
-void				ft_s(va_list args, t_flags flag);
-void				ft_di(va_list args, t_flags flag);
-void				ft_integers(va_list args, t_flags flag, char conversion);
+void				ft_c(va_list args, t_flags flag, unsigned int *nbr_pc);
+void				ft_s(va_list args, t_flags flag, unsigned int *nbr_pc);
+void				ft_integers(va_list args, t_flags flag, unsigned int *nbr_p,
+								char conversion);
 
 #endif

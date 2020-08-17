@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/17 13:44:15 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/17 16:28:28 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	ft_conversionposition(const char *s)
 	return (position);
 }
 
-int			ft_printarg(const char *format, va_list args)
+static int	ft_printarg(const char *format, va_list args, unsigned int *nbr_pc)
 {
 	int		position;
 	t_flags	flag;
@@ -41,33 +41,38 @@ int			ft_printarg(const char *format, va_list args)
 	flag = ft_checkflag(ft_substr(format, 0, position), args);
 	format += position - 1;
 	if (*format == 'c')
-		ft_c(args, flag);
+		ft_c(args, flag, nbr_pc);
 	if (*format == 's')
-		ft_s(args, flag);
+		ft_s(args, flag, nbr_pc);
 	if (*format == 'p' || *format == 'd' || *format == 'i' || *format == 'u'
 			|| *format == 'x' || *format == 'X')
-		ft_integers(args, flag, *format);
+		ft_integers(args, flag, nbr_pc, *format);
 	return (position);
 }
 
 int			ft_printf(const char *format, ...)
 {
-	int		position;
-	va_list	args;
+	int				position;
+	unsigned int	nbr_pc;
+	va_list			args;
 
+	nbr_pc = 0;
 	va_start(args, format);
 	while (*format)
 	{
 		if (*format == '%')
 		{
-			if (!(position = ft_printarg(format, args)))
+			if (!(position = ft_printarg(format, args, &nbr_pc)))
 				return (0);
 			format += position;
 		}
 		else
+		{
 			ft_putchar_fd(*format, 1);
+			nbr_pc++;
+		}
 		format++;
 	}
 	va_end(args);
-	return (0);
+	return (nbr_pc);
 }

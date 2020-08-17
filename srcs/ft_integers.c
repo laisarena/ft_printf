@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/17 13:44:04 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/17 16:33:03 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,23 @@ static void	ft_printstr(unsigned int pr, unsigned int sign, char *str, char cnv)
 	ft_putstr_fd(str, 1);
 }
 
-static void	ft_printflag(char *str, t_flags flag, char conversion)
+/*
+ * PRECISION - the minimum number of digits to be printed for 
+ *					d, i, o, u, x, and X conversions
+ */
+
+static void ft_nbrptrchar(t_flags flag, unsigned int len, unsigned int *nbr_pc)
+{
+	if (flag.width >flag.precision && flag.width > len )
+		*nbr_pc += flag.width;
+	else if (flag.precision > flag.width && flag.precision > len)
+		*nbr_pc += flag.precision;
+	else
+		*nbr_pc += len;
+}
+
+static void	ft_printflag(char *str, t_flags flag, char conversion, 
+		unsigned int *nbr_pc)
 {
 	unsigned int	len;
 	unsigned int	sign;
@@ -33,6 +49,7 @@ static void	ft_printflag(char *str, t_flags flag, char conversion)
 		len = len + 2;
 	sign = (*str == '-') ? 1 : 0;
 	str = (*str == '-') ? str + 1 : str;
+	ft_nbrptrchar(flag, len, nbr_pc);
 	if (flag.precision > len - sign)
 		flag.precision = flag.precision - len + sign;
 	else
@@ -51,9 +68,10 @@ static void	ft_printflag(char *str, t_flags flag, char conversion)
 		ft_printstr(flag.precision, sign, str, conversion);
 }
 
-void		ft_integers(va_list args, t_flags flag, char conversion)
+void		ft_integers(va_list args, t_flags flag, unsigned int *nbr_pc, 
+									char conversion)
 {
-	char			*str;
+	char	*str;
 
 	if (conversion == 'd' || conversion == 'i')
 		str = ft_itoa(va_arg(args, int));
@@ -65,5 +83,5 @@ void		ft_integers(va_list args, t_flags flag, char conversion)
 		str = ft_utoa_base(va_arg(args, unsigned int), "0123456789ABCDEF");
 	if (conversion == 'p')
 		str = ft_ultoa_base(va_arg(args, unsigned long), "0123456789abcdef");
-	ft_printflag(str, flag, conversion);
+	ft_printflag(str, flag, conversion,nbr_pc);
 }

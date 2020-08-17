@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/17 13:43:55 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/17 15:07:45 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	ft_setflags(t_flags *flag)
 
 static char	*ft_valueflag(char *strflag, unsigned int *flag, int value)
 {
-	*flag = value;
+	if (value > 0)
+		*flag = value;
 	return (++strflag);
 }
 
