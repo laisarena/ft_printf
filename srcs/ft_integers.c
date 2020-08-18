@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/18 14:52:13 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/18 15:13:34 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void ft_nbrptrchar(t_flags flag, unsigned int len, unsigned int sign,
 {
 	if (flag.width > flag.precision && flag.width > len )
 		*nbr_pc += flag.width;
-	else if (flag.precision > flag.width && flag.precision >= len)
+	else if (flag.precision >= flag.width && flag.precision >= len)
 		*nbr_pc += flag.precision + sign;
 	else 
 		*nbr_pc += len;
