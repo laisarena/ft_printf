@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 13:19:50 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/17 16:01:04 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/18 13:35:43 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef	struct
 	unsigned int	justify;
 	unsigned int	width;
 	unsigned int	precision;
+	unsigned int	zprecision;
 }					t_flags;
 int					ft_printf(const char *format, ...);
 t_flags				ft_checkflag(char *strflag, va_list args);
