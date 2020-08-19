@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/19 10:14:37 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/19 13:50:25 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void ft_nbrptrchar(t_flags flag, unsigned int len, unsigned int sign,
 /*
  * PRECISION - the minimum number of digits to be printed for 
  *					d, i, o, u, x, and X conversions
- *  - When '0' an precision, '0' is ignored.
+ *  - When '0' and precision, '0' is ignored.
  *  - The sign of the number is not include on precision size
  */
 
@@ -89,6 +89,8 @@ void		ft_integers(va_list args, t_flags flag, unsigned int *nbr_pc,
 	if (conversion == 'p')
 		str = ft_ultoa_base((unsigned int)value, "0123456789abcdef");
 	if (value == 0 && flag.prec.on && !flag.prec.val)
-		ft_bzero(str, 1);
+		*str = ' ';
+	if (value == 0 && flag.prec.on && !flag.prec.val && !flag.width.val)
+		*str = '\0';
 	ft_printflag(str, flag, conversion, nbr_pc);
 }
