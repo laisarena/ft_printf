@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/18 14:12:08 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/19 13:11:42 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,40 @@ static void	ft_setflags(t_flags *flag)
 {
 	flag->zero = 0;
 	flag->justify = 0;
-	flag->width = 0;
-	flag->precision = 0;
-	flag->zprecision = 0;
+	flag->width.on = 0;
+	flag->width.val = 0;
+	flag->prec.on = 0;
+	flag->prec.val = 0;
 }
 
-static char	*ft_valueflag(char *strflag, unsigned int *flag, int value)
+static char	*ft_turnonflag(char *strflag, unsigned int *flag)
 {
-	*flag = (value < 0) ? 0 : value;
+	*flag = 1;
 	return (++strflag);
 }
 
-static char	*ft_width(char *strflag, unsigned int *flag)
+static char	*ft_valueflag(char *strflag, t_flag_val *flag, int value)
 {
-	while (ft_isdigit(*strflag))
-		*flag = *flag * 10 + *strflag++ - '0';
-	return (strflag);
+	if (value < 0)
+	{
+		flag->on = 0;
+		flag->val = 0;
+	}
+	else
+	{
+		flag->on = 1 ;
+		flag->val =  value;
+	}
+	return (++strflag);
 }
 
-static char	*ft_precision(char *strflag, t_flags *flag)
+static char	*ft_width_precision(char *strflag, t_flag_val *flag)
 {
 	while (ft_isdigit(*strflag))
-		flag->precision = flag->precision * 10 + *strflag++ - '0';
-	if (flag->precision == 0)
-		flag->zprecision = 1;
+	{	
+		flag->on = 1;
+		flag->val = flag->val * 10 + *strflag++ - '0';
+	}
 	return (strflag);
 }
 
@@ -50,9 +60,9 @@ t_flags		ft_checkflag(char *strflag, va_list args)
 
 	ft_setflags(&flag);
 	if (*strflag == '0')
-		strflag = ft_valueflag(strflag, &flag.zero, 1);
+		strflag = ft_turnonflag(strflag, &flag.zero);
 	if (*strflag == '-')
-		strflag = ft_valueflag(strflag, &flag.justify, 1);
+		strflag = ft_turnonflag(strflag, &flag.justify);
 	if (*strflag == '*')
 	{	
 		value =  va_arg(args, int);
@@ -64,15 +74,15 @@ t_flags		ft_checkflag(char *strflag, va_list args)
 		else
 			strflag = ft_valueflag(strflag, &flag.width, value);
 	}
-	strflag = ft_width(strflag, &flag.width);
+	strflag = ft_width_precision(strflag, &flag.width);
 	if (*strflag == '.')
 	{
 		if (*(strflag + 1) == '*')
-			strflag = ft_valueflag(strflag++, &flag.precision, va_arg(args, int));
+			strflag = ft_valueflag(strflag++, &flag.prec, va_arg(args, int));
 		else if (ft_isdigit(*(strflag + 1)))
-			strflag = ft_precision(++strflag, &flag);
+			strflag = ft_width_precision(++strflag, &flag.prec);
 		else
-			flag.zprecision = 1;
+			flag.prec.on = 1;
 	}
 	return (flag);
 }
