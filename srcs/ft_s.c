@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:51:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 09:37:29 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/20 10:17:31 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@
  * it is padded with spaces 
  */
 
-void	ft_s(va_list args, t_flags flag, unsigned int *nbr_pc)
+void	ft_s(const char *str, t_flags flag, unsigned int *nbr_pc)
 {
 	unsigned int	len;
-	char			*str;
 
-	if ((str = va_arg(args, char *)))
+	if (str) 
 	{
 		len = ft_strlen(str);
 		if (flag.prec.on && flag.prec.val < len)
@@ -33,7 +32,7 @@ void	ft_s(va_list args, t_flags flag, unsigned int *nbr_pc)
 			str = ft_substr(str, 0, len);
 		}
 		if (flag.justify)
-			ft_putstr_fd(str, 1);
+			ft_putstr_fd((char *)str, 1);
 		*nbr_pc += (flag.width.val > len) ? flag.width.val : len;
 		while (flag.width.val > len && flag.width.val--)
 		{
@@ -43,6 +42,6 @@ void	ft_s(va_list args, t_flags flag, unsigned int *nbr_pc)
 				ft_putchar_fd(' ', 1);
 		}
 		if (!flag.justify)
-			ft_putstr_fd(str, 1);
+			ft_putstr_fd((char *)str, 1);
 	}
 }
