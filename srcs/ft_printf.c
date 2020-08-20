@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/19 18:23:27 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/19 18:50:10 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	ft_printarg(const char *format, va_list args, unsigned int *nbr_pc)
 	format += position - 1;
 	if (*format == '%')
 	{
+		//ft_s(args, flag, nbr_pc);
 		ft_putchar_fd('%', 1);
 		*nbr_pc += 1;
 	}
