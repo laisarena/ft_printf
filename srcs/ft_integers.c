@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 10:06:07 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/20 16:16:26 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static void	ft_printflag(char *str, t_flags flag, char conversion,
 		flag.width.val = flag.width.val - len - flag.prec.val;
 	else
 		flag.width.val = 0;
-	if (conversion == 'p' && (flag.zero || flag.prec.on) && !flag.justify)
-		flag.prec.val = flag.prec.val + 2;
+	//if (conversion == 'p' && (flag.zero || flag.prec.on) && !flag.justify)
+	//	flag.prec.val = flag.prec.val + 2;
 	if (flag.zero && !flag.justify)
 		flag.prec.val = flag.prec.val + flag.width.val;
 	ft_printstr(flag, sign, str, conversion);
@@ -96,7 +96,7 @@ void		ft_integers(va_list args, t_flags flag, unsigned int *nbr_pc,
 		*str = ' ';
 	if (value == 0 && flag.prec.on && !flag.prec.val && !flag.width.val)
 		*str = '\0';
-	if (value == 0 && conversion == 'p')
-		*str = '\0';
+	//if (value == 0 && conversion == 'p' && )
+	//	*str = '\0';
 	ft_printflag(str, flag, conversion, nbr_pc);
 }
