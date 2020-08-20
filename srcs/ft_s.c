@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:51:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 10:17:31 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/20 13:45:41 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,29 @@
  * it is padded with spaces 
  */
 
-void	ft_s(const char *str, t_flags flag, unsigned int *nbr_pc)
+static char*	ft_strnull(void)
+{
+	char *str;
+
+	if (!(str = ft_calloc(7, sizeof(char))))
+		return (NULL);
+	str[0] = '(';
+	str[1] = 'n';
+	str[2] = 'u';
+	str[3] = 'l';
+	str[4] = 'l';
+	str[5] = ')';
+	str[6] = '\0';
+	return (str);
+}
+
+void			ft_s(const char *str, t_flags flag, unsigned int *nbr_pc)
 {
 	unsigned int	len;
 
-	if (str) 
+	if (!str)
+		str = ft_strnull();
+	if (str)
 	{
 		len = ft_strlen(str);
 		if (flag.prec.on && flag.prec.val < len)
