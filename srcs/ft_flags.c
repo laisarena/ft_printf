@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/19 13:27:48 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/20 20:41:47 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@ static void	ft_setflags(t_flags *flag)
 	flag->prec.val = 0;
 }
 
-static char	*ft_turnonflag(char *strflag, unsigned int *flag)
-{
-	*flag = 1;
-	return (++strflag);
-}
-
 static char	*ft_valueflag(char *strflag, t_flag_val *flag, int value)
 {
 	if (value < 0)
@@ -37,8 +31,8 @@ static char	*ft_valueflag(char *strflag, t_flag_val *flag, int value)
 	}
 	else
 	{
-		flag->on = 1 ;
-		flag->val =  value;
+		flag->on = 1;
+		flag->val = value;
 	}
 	return (++strflag);
 }
@@ -46,9 +40,22 @@ static char	*ft_valueflag(char *strflag, t_flag_val *flag, int value)
 static char	*ft_width_precision(char *strflag, t_flag_val *flag)
 {
 	while (ft_isdigit(*strflag))
-	{	
+	{
 		flag->on = 1;
 		flag->val = flag->val * 10 + *strflag++ - '0';
+	}
+	return (strflag);
+}
+
+static char	*ft_just_zero(char *strflag, t_flags *flag)
+{
+	while (*strflag == '-' || *strflag == '0')
+	{
+		if (*strflag == '0')
+			flag->zero = 1;
+		if (*strflag == '-')
+			flag->justify = 1;
+		strflag++;
 	}
 	return (strflag);
 }
@@ -59,13 +66,10 @@ t_flags		ft_checkflag(char *strflag, va_list args)
 	t_flags flag;
 
 	ft_setflags(&flag);
-	if (*strflag == '0')
-		strflag = ft_turnonflag(strflag, &flag.zero);
-	if (*strflag == '-')
-		strflag = ft_turnonflag(strflag, &flag.justify);
+	strflag = ft_just_zero(strflag, &flag);
 	if (*strflag == '*')
-	{	
-		value =  va_arg(args, int);
+	{
+		value = va_arg(args, int);
 		if (value < 0)
 		{
 			flag.justify = 1;

@@ -6,20 +6,20 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:51:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 13:45:41 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/20 20:34:00 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
 /*
- * Function to print strings
- * PRECISION - the maximum number of characters to be printed from a string
- * WIDTH - If the value to be printed is shorter than the field width,
- * it is padded with spaces 
- */
+** Function to print strings
+** PRECISION - the maximum number of characters to be printed from a string
+** WIDTH - If the value to be printed is shorter than the field width,
+** it is padded with spaces
+*/
 
-static char*	ft_strnull(void)
+static char	*ft_strnull(void)
 {
 	char *str;
 
@@ -35,7 +35,7 @@ static char*	ft_strnull(void)
 	return (str);
 }
 
-void			ft_s(const char *str, t_flags flag, unsigned int *nbr_pc)
+void		ft_s(const char *str, t_flags flag, unsigned int *nbr_pc)
 {
 	unsigned int	len;
 
