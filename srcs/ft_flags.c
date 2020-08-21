@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 20:41:47 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/21 11:06:21 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ t_flags		ft_checkflag(char *strflag, va_list args)
 	// A flag zero é ignorada quando tem precision
 	if (flag.prec.on)
 		flag.zero = 0;
+	//free(strflag);
 	return (flag);
 }
