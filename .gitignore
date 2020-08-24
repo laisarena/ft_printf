@@ -1,0 +1,14 @@
+# Object and archive files
+*.[ao]
+
+# Executables
+a.out
+
+# Debug files
+a.out.dSYM/
+
+# vim temporary files
+*.swp
+
+# Desktop Services Store
+.DS_Store

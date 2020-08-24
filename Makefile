@@ -6,7 +6,7 @@
 #    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/08/20 16:30:03 by laisarena        ###   ########.fr        #
+#    Updated: 2020/08/24 11:02:09 by laisarena        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,10 +54,10 @@ fclean: clean
 re:	fclean all
 
 test:
-	gcc $(FLAGS) ./testes/*.c -L. -lftprintf  -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
+	gcc $(FLAGS) ../testePrintf/testes/*.c -L. -lftprintf  -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
 testg:
-	gcc -g $(FLAGS) ./testes/*.c ./srcs/*.c -L. -lftprintf -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
+	gcc -g $(FLAGS) ../testePrintf/testes/*.c ./srcs/*.c -L. -lftprintf -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
 
 testf:
-	gcc  ./testes/*.c -L. -lftprintf -I$(PATH_INCLUDE) && ./a.out
+	gcc  ../testePrintf/testes/*.c -L. -lftprintf -I$(PATH_INCLUDE) && ./a.out
 .PHONY: all clean fclean re
