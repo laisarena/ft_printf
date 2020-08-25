@@ -6,22 +6,22 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 20:37:05 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/25 11:01:12 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static void	ft_printstr(t_flags flag, unsigned int sign, char *str, char cnv)
+static void	ft_printstr(t_flags flag, unsigned int neg, char *str, char cnv)
 {
 	if (!flag.justify)
 		while (flag.width.val--)
 			if (!flag.zero)
 				ft_putchar_fd(' ', 1);
-	if (sign)
-		ft_putchar_fd('-', 1);
-	if (cnv == 'p')
-		ft_putstr_fd("0x", 1);
+	if (neg)
+		ft_putchar_fd('-',1);
+	if (flag.sign && !neg  && (cnv == 'd' || cnv == 'i'))
+		ft_putchar_fd('+', 1);
 	while (flag.prec.val--)
 		ft_putchar_fd('0', 1);
 	ft_putstr_fd(str, 1);
@@ -30,15 +30,15 @@ static void	ft_printstr(t_flags flag, unsigned int sign, char *str, char cnv)
 			ft_putchar_fd(' ', 1);
 }
 
-static void	ft_nbrptrchar(t_flags flag, unsigned int len, unsigned int sign,
-								unsigned int *nbr_pc)
+static void	ft_nbrptrchar(t_flags flag, unsigned int sign, unsigned int len,
+							unsigned int *nbr_pc)
 {
-	if (flag.width.val > flag.prec.val && flag.width.val > len)
+	if (flag.width.val > flag.prec.val && flag.width.val > len + sign)
 		*nbr_pc += flag.width.val;
-	else if (flag.prec.val >= flag.width.val && flag.prec.val >= len)
+	else if (flag.prec.val >= flag.width.val && flag.prec.val >= len + sign)
 		*nbr_pc += flag.prec.val + sign;
 	else
-		*nbr_pc += len;
+		*nbr_pc += len + sign;
 }
 
 /*
@@ -52,25 +52,25 @@ static void	ft_printflag(char *str, t_flags flag, char conversion,
 		unsigned int *nbr_pc)
 {
 	unsigned int	len;
+	unsigned int	neg;
 	unsigned int	sign;
 
-	len = ft_strlen(str);
-	if (conversion == 'p')
-		len = len + 2;
-	sign = (*str == '-') ? 1 : 0;
+	neg = (*str == '-') ? 1 : 0;
+	sign = (neg || flag.sign) ? 1 : 0;
 	str = (*str == '-') ? str + 1 : str;
-	ft_nbrptrchar(flag, len, sign, nbr_pc);
-	if (flag.prec.val > len - sign)
-		flag.prec.val += -len + sign;
+	len = ft_strlen(str);
+	ft_nbrptrchar(flag, sign, len, nbr_pc);
+	if (flag.prec.val > len)
+		flag.prec.val -= len;
 	else
 		flag.prec.val = 0;
-	if (flag.width.val > len + flag.prec.val)
-		flag.width.val += -len - flag.prec.val;
+	if (flag.width.val > len + sign + flag.prec.val)
+		flag.width.val += -len - sign - flag.prec.val;
 	else
 		flag.width.val = 0;
 	if (flag.zero && !flag.justify)
 		flag.prec.val += flag.width.val;
-	ft_printstr(flag, sign, str, conversion);
+	ft_printstr(flag, neg, str, conversion);
 }
 
 void		ft_integers(va_list args, t_flags flag, unsigned int *nbr_pc,
@@ -88,11 +88,10 @@ void		ft_integers(va_list args, t_flags flag, unsigned int *nbr_pc,
 		str = ft_utoa_base((unsigned int)value, "0123456789abcdef");
 	if (conversion == 'X')
 		str = ft_utoa_base((unsigned int)value, "0123456789ABCDEF");
-	if (conversion == 'p')
-		str = ft_ultoa_base((unsigned int)value, "0123456789abcdef");
 	if (value == 0 && flag.prec.on && !flag.prec.val)
 		*str = ' ';
-	if (value == 0 && flag.prec.on && !flag.prec.val && !flag.width.val)
+	if (value == 0 && flag.prec.on && !flag.prec.val &&
+			(!flag.width.val || flag.sign))
 		*str = '\0';
 	ft_printflag(str, flag, conversion, nbr_pc);
 }
