@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/25 11:01:12 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/25 13:31:30 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void	ft_printstr(t_flags flag, unsigned int neg, char *str, char cnv)
 		ft_putchar_fd('-',1);
 	if (flag.sign && !neg  && (cnv == 'd' || cnv == 'i'))
 		ft_putchar_fd('+', 1);
+	if (flag.space && !neg  && (cnv == 'd' || cnv == 'i'))
+		ft_putchar_fd(' ', 1);
 	while (flag.prec.val--)
 		ft_putchar_fd('0', 1);
 	ft_putstr_fd(str, 1);
@@ -56,7 +58,7 @@ static void	ft_printflag(char *str, t_flags flag, char conversion,
 	unsigned int	sign;
 
 	neg = (*str == '-') ? 1 : 0;
-	sign = (neg || flag.sign) ? 1 : 0;
+	sign = (neg || flag.sign || flag.space) ? 1 : 0;
 	str = (*str == '-') ? str + 1 : str;
 	len = ft_strlen(str);
 	ft_nbrptrchar(flag, sign, len, nbr_pc);
