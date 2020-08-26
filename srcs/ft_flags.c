@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/25 10:48:31 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/25 13:46:44 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ft_setflags(t_flags *flag)
 	flag->justify = 0;
 	flag->sign = 0;
 	flag->space = 0;
+	flag->hasht = 0;
 	flag->width.on = 0;
 	flag->width.val = 0;
 	flag->prec.on = 0;
@@ -52,7 +53,7 @@ static char	*ft_width_precision(char *strflag, t_flag_val *flag)
 static char	*ft_bolflags(char *strflag, t_flags *flag)
 {
 	while (*strflag == '-' || *strflag == '0' || *strflag == '+'
-			|| *strflag == ' ')
+				|| *strflag == ' ' || *strflag == '#')
 	{
 		if (*strflag == '0')
 			flag->zero = 1;
@@ -62,6 +63,8 @@ static char	*ft_bolflags(char *strflag, t_flags *flag)
 			flag->sign = 1;
 		if (*strflag == ' ')
 			flag->space = 1;
+		if (*strflag == '#')
+			flag->hasht = 1;
 		strflag++;
 	}
 	return (strflag);

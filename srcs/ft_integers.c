@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/25 13:31:30 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/25 17:56:00 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ static void	ft_printstr(t_flags flag, unsigned int neg, char *str, char cnv)
 		ft_putchar_fd('+', 1);
 	if (flag.space && !neg  && (cnv == 'd' || cnv == 'i'))
 		ft_putchar_fd(' ', 1);
+	if (flag.hasht && cnv == 'x' && !(*str == '0') && str)
+		ft_putstr_fd("0x", 1);
+	if (flag.hasht && cnv == 'X' && !(*str == '0') && str)
+		ft_putstr_fd("0X", 1);
 	while (flag.prec.val--)
 		ft_putchar_fd('0', 1);
 	ft_putstr_fd(str, 1);
@@ -58,7 +62,8 @@ static void	ft_printflag(char *str, t_flags flag, char conversion,
 	unsigned int	sign;
 
 	neg = (*str == '-') ? 1 : 0;
-	sign = (neg || flag.sign || flag.space) ? 1 : 0;
+	sign = ((conversion == 'x' || conversion == 'X') && *str != '0' && str && flag.hasht) ? 2 : 0;
+	sign = (neg || flag.sign || flag.space) ? 1 : sign;
 	str = (*str == '-') ? str + 1 : str;
 	len = ft_strlen(str);
 	ft_nbrptrchar(flag, sign, len, nbr_pc);
@@ -90,6 +95,9 @@ void		ft_integers(va_list args, t_flags flag, unsigned int *nbr_pc,
 		str = ft_utoa_base((unsigned int)value, "0123456789abcdef");
 	if (conversion == 'X')
 		str = ft_utoa_base((unsigned int)value, "0123456789ABCDEF");
+	if (value == 0 && (conversion == 'x' || conversion ==  'X') && 
+			flag.prec.on && !flag.prec.val)
+		*str = '\0';
 	if (value == 0 && flag.prec.on && !flag.prec.val)
 		*str = ' ';
 	if (value == 0 && flag.prec.on && !flag.prec.val &&
