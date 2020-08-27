@@ -34,7 +34,7 @@ typedef	struct
 }					t_flags;
 
 int					ft_printf(const char *format, ...);
-t_flags				ft_checkflag(char *strflag, va_list args);
+t_flags				ft_treatformatting(char *strflag, va_list args);
 void				ft_c(va_list args, t_flags flag, unsigned int *nbr_pc);
 void				ft_s(const char *str, t_flags flag, unsigned int *nbr_pc);
 void				ft_p(va_list args, t_flags flag, unsigned int *nbr_pc);

@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 17:15:55 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/27 13:35:28 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	ft_printarg(const char *format, va_list args, unsigned int *nbr_pc)
 
 	if (!(position = ft_conversionposition(format++)))
 		return (0);
-	flag = ft_checkflag(ft_substr(format, 0, position), args);
+	flag = ft_treatformatting(ft_substr(format, 0, position), args);
 	format += position - 1;
 	if (*format == '%')
 		ft_s(ft_substr(format, 0, 1), flag, nbr_pc);
@@ -56,7 +56,6 @@ static int	ft_printarg(const char *format, va_list args, unsigned int *nbr_pc)
 
 int			ft_printf(const char *format, ...)
 {
-	int				position;
 	unsigned int	nbr_pc;
 	va_list			args;
 
@@ -66,9 +65,8 @@ int			ft_printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			if (!(position = ft_printarg(format, args, &nbr_pc)))
+			if (!(format += ft_printarg(format, args, &nbr_pc)))
 				return (0);
-			format += position;
 		}
 		else
 		{

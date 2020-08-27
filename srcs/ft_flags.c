@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/25 13:46:44 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/27 16:05:11 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,51 @@ static void	ft_setflags(t_flags *flag)
 	flag->prec.val = 0;
 }
 
-static char	*ft_valueflag(char *strflag, t_flag_val *flag, int value)
+static char	*ft_precision(char *strflag, t_flags *flag, va_list args)
 {
-	if (value < 0)
-	{
-		flag->on = 0;
-		flag->val = 0;
-	}
-	else
-	{
-		flag->on = 1;
-		flag->val = value;
-	}
-	return (++strflag);
-}
+	int		value;
 
-static char	*ft_width_precision(char *strflag, t_flag_val *flag)
-{
+	if (*strflag++ == '.')
+		flag->prec.on = 1;
 	while (ft_isdigit(*strflag))
+		flag->prec.val = flag->prec.val * 10 + *strflag++ - '0';
+	if (*strflag == '*')
 	{
-		flag->on = 1;
-		flag->val = flag->val * 10 + *strflag++ - '0';
+		if ((value = va_arg(args, int)) < 0)
+		{
+			flag->prec.on = 0;
+			flag->prec.val = 0;
+		}
+		else
+			flag->prec.val = value;
+		strflag++;
 	}
 	return (strflag);
 }
 
-static char	*ft_bolflags(char *strflag, t_flags *flag)
+static char	*ft_width(char *strflag, t_flags *flag, va_list args)
+{
+	int		value;
+
+	if (ft_isdigit(*strflag) || *strflag == '*')
+		flag->width.on = 1;
+	while (ft_isdigit(*strflag))
+		flag->width.val = flag->width.val * 10 + *strflag++ - '0';
+	if (*strflag == '*')
+	{
+		if ((value = va_arg(args, int)) < 0)
+		{
+			flag->justify = 1;
+			flag->width.val = -value;
+		}
+		else
+			flag->width.val = value;
+		strflag++;
+	}
+	return (strflag);
+}
+
+static char	*ft_checkflags(char *strflag, t_flags *flag)
 {
 	while (*strflag == '-' || *strflag == '0' || *strflag == '+'
 				|| *strflag == ' ' || *strflag == '#')
@@ -70,40 +89,22 @@ static char	*ft_bolflags(char *strflag, t_flags *flag)
 	return (strflag);
 }
 
-t_flags		ft_checkflag(char *strflag, va_list args)
+/*
+** A flag zero é ignorada quando tem precision
+**A flag space é ignorada quando tem +
+*/
+
+t_flags		ft_treatformatting(char *strflag, va_list args)
 {
-	int		value;
 	t_flags flag;
 
 	ft_setflags(&flag);
-	strflag = ft_bolflags(strflag, &flag);
-	if (*strflag == '*')
-	{
-		value = va_arg(args, int);
-		if (value < 0)
-		{
-			flag.justify = 1;
-			strflag = ft_valueflag(strflag, &flag.width, value * -1);
-		}
-		else
-			strflag = ft_valueflag(strflag, &flag.width, value);
-	}
-	strflag = ft_width_precision(strflag, &flag.width);
-	if (*strflag == '.')
-	{
-		if (*(strflag + 1) == '*')
-			strflag = ft_valueflag(strflag++, &flag.prec, va_arg(args, int));
-		else if (ft_isdigit(*(strflag + 1)))
-			strflag = ft_width_precision(++strflag, &flag.prec);
-		else
-			flag.prec.on = 1;
-	}
-	// A flag zero é ignorada quando tem precision
+	strflag = ft_checkflags(strflag, &flag);
+	strflag = ft_width(strflag, &flag, args);
+	strflag = ft_precision(strflag, &flag, args);
 	if (flag.prec.on)
 		flag.zero = 0;
-	// A flag space é ignorada quando tem +
 	if (flag.sign)
 		flag.space = 0;
-	//free(strflag);
 	return (flag);
 }
