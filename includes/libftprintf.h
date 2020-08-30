@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 13:19:50 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/29 19:41:43 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/29 21:45:10 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef	struct
 	unsigned int	zero;
 	unsigned int	justify;
 	unsigned int	sign;
+	unsigned int	negative;
 	unsigned int	space;
 	unsigned int	hasht;
 	unsigned int	l;
@@ -37,6 +38,13 @@ typedef	struct
 	t_flag_val		prec;
 	t_flag_val		valueZero;
 }					t_flags;
+
+typedef	struct
+{
+	long long int	(*correctSize)(t_flags *flag, long long int number);
+	int				(*countDigits)(long long int number, unsigned int base);
+	void			(*printPrefix)(t_flags flag);
+}					t_function;
 
 int					ft_printf(const char *format, ...);
 t_flags				ft_treatformatting(char *strflag, va_list args);

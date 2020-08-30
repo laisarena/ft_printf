@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_decimalinteger.c                                :+:      :+:    :+:   */
+/*   ft_decimal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/28 13:50:53 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/29 20:57:13 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/29 21:56:21 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static void	ft_printnumber_fd(long long number, int fd)
 		ft_printnumber_base_fd(number / base, digitsbase, fd);
 	ft_putchar_fd(digitsbase[number % base], fd);
 }*/
-static void	ft_printPrefix(t_flags flag, unsigned int negative)
+static void	ft_printPrefix(t_flags flag)
 {
-	if (negative)
+	if (flag.negative)
 		ft_putchar_fd('-',1);
 	else if (flag.sign)
 		ft_putchar_fd('+', 1);
@@ -38,14 +38,14 @@ static void	ft_printPrefix(t_flags flag, unsigned int negative)
 }
 
 static void	ft_printAll(t_flags flag,
-						unsigned int negative,
-						long long value)
+						long long value,
+						t_function function)
 {
 	if (!flag.justify)
 		while (flag.width.val--)
 			if (!flag.zero)
 				ft_putchar_fd(' ', 1);
-	ft_printPrefix(flag, negative);
+	function.printPrefix(flag);
 	while (flag.prec.val--)
 		ft_putchar_fd('0', 1);
 	if (!flag.valueZero.on)
@@ -65,13 +65,12 @@ static void	ft_printAll(t_flags flag,
 */
 
 static void	ft_calculatePadded(t_flags *flag,
-								unsigned int negative,
 								unsigned int len,
 								unsigned int *nbr_pc)
 {
 	unsigned int	prefix;
 
-	prefix = (negative || flag->sign || flag->space) ? 1 : 0;
+	prefix = (flag->negative || flag->sign || flag->space) ? 1 : 0;
 	if (flag->prec.val > len)
 		flag->prec.val -= len;
 	else
@@ -116,30 +115,39 @@ static unsigned int ft_analizeZeroCase(t_flags *flag)
 	return (1);
 }
 
-long long int ft_correctSize(t_flags flag, long long int number, unsigned int *negative)
+long long int ft_correctSize(t_flags *flag, long long int number)
 {
-	if (flag.ll)
+	if (flag->ll)
 		number = (long long int)number;
-	else if (flag.l)
+	else if (flag->l)
 		number = (long int)number;
 	else
 		number = (int)number;
-	*negative = (number < 0) ? 1 : 0;
+	flag->negative = (number < 0) ? 1 : 0;
 	if ( number < 0)
 		number = -number;
 	return (number);
 }
 
+void		ft_setFunction(t_function *function)
+{
+	function->correctSize = ft_correctSize;
+	function->countDigits= ft_countDigits;
+	function->printPrefix = ft_printPrefix;
+}
+
 void		ft_decimal(va_list args, t_flags flag, unsigned int *nbr_pc)
 {
+	t_function		function;
 	long long int	number;
 	unsigned int	digits;
-	unsigned int	negative;
+	
 
-	number = ft_correctSize(flag, va_arg(args,long long int), &negative);
-	digits = ft_countDigits(number, 10);
+	ft_setFunction(&function);
+	number = function.correctSize(&flag, va_arg(args,long long int));
+	digits = function.countDigits(number, 10);
 	if ((int)number == 0)
 		digits = ft_analizeZeroCase(&flag);
-	ft_calculatePadded(&flag, negative, digits, nbr_pc);
-	ft_printAll(flag, negative, number);
+	ft_calculatePadded(&flag, digits, nbr_pc);
+	ft_printAll(flag, number, function);
 }

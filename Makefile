@@ -6,7 +6,7 @@
 #    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/08/28 15:05:13 by laisarena        ###   ########.fr        #
+#    Updated: 2020/08/29 21:55:53 by laisarena        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS = ft_printf.c\
 	ft_s.c\
 	ft_pointer.c\
 	ft_integers.c\
-	ft_decimalinteger.c\
+	ft_decimal.c\
 
 OBJS = $(addprefix $(PATH_SRCS),$(SRCS:.c=.o))
 
