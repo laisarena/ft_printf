@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/27 16:05:11 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/29 19:59:06 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,54 @@ static void	ft_setflags(t_flags *flag)
 	flag->sign = 0;
 	flag->space = 0;
 	flag->hasht = 0;
+	flag->l = 0;
+	flag->ll = 0;
+	flag->h = 0;
+	flag->hh = 0;
 	flag->width.on = 0;
 	flag->width.val = 0;
 	flag->prec.on = 0;
 	flag->prec.val = 0;
+	flag->valueZero.on = 0;
+	flag->valueZero.val = '0';
+}
+
+static char	*ft_lenflags(char *strflag, t_flags *flag)
+{
+	if (*strflag)
+	{
+		if (*strflag == 'l' && *(strflag + 1) == 'l')
+			flag->ll = 1;
+		else if (*strflag == 'l')
+			flag->l = 1;
+		if (*strflag == 'h' && *(strflag + 1) == 'h')
+			flag->hh = 1;
+		else if (*strflag == 'h')
+			flag->h = 1;
+	}
+	return (++strflag);
 }
 
 static char	*ft_precision(char *strflag, t_flags *flag, va_list args)
 {
 	int		value;
 
-	if (*strflag++ == '.')
-		flag->prec.on = 1;
-	while (ft_isdigit(*strflag))
-		flag->prec.val = flag->prec.val * 10 + *strflag++ - '0';
-	if (*strflag == '*')
+	if (*strflag == '.')
 	{
-		if ((value = va_arg(args, int)) < 0)
+		flag->prec.on = 1;
+		while (ft_isdigit(*(++strflag)))
+			flag->prec.val = flag->prec.val * 10 + *strflag - '0';
+		if (*strflag == '*')
 		{
-			flag->prec.on = 0;
-			flag->prec.val = 0;
+			if ((value = va_arg(args, int)) < 0)
+			{
+				flag->prec.on = 0;
+				flag->prec.val = 0;
+			}
+			else
+				flag->prec.val = value;
+			strflag++;
 		}
-		else
-			flag->prec.val = value;
-		strflag++;
 	}
 	return (strflag);
 }
@@ -102,6 +126,7 @@ t_flags		ft_treatformatting(char *strflag, va_list args)
 	strflag = ft_checkflags(strflag, &flag);
 	strflag = ft_width(strflag, &flag, args);
 	strflag = ft_precision(strflag, &flag, args);
+	strflag = ft_lenflags(strflag, &flag);
 	if (flag.prec.on)
 		flag.zero = 0;
 	if (flag.sign)

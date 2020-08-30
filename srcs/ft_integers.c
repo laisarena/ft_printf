@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/25 17:56:00 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/28 10:55:34 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,44 @@ static void	ft_printflag(char *str, t_flags flag, char conversion,
 	ft_printstr(flag, neg, str, conversion);
 }
 
+static int	ft_countdigits(long long number, unsigned int base)
+{
+	unsigned int	digits;
+
+	digits = 1;
+	if ( number < 0)
+		number = -number;
+	while (number >= base)
+	{
+		number = number / base;
+		digits++;
+	}
+	return (digits);
+}
+
 void		ft_integers(va_list args, t_flags flag, unsigned int *nbr_pc,
 						char conversion)
 {
 	char	*str;
-	int		value;
+	long long		value;
+	unsigned int	digits;
 
-	value = va_arg(args, int);
+	value = va_arg(args,long long);
+	digits = ft_countdigits((int)value, 10);
 	if (conversion == 'd' || conversion == 'i')
-		str = ft_itoa(value);
+		str = ft_itoa((int)value);
 	if (conversion == 'u')
 		str = ft_utoa((unsigned int)value);
 	if (conversion == 'x')
 		str = ft_utoa_base((unsigned int)value, "0123456789abcdef");
 	if (conversion == 'X')
 		str = ft_utoa_base((unsigned int)value, "0123456789ABCDEF");
-	if (value == 0 && (conversion == 'x' || conversion ==  'X') && 
+	if ((int)value == 0 && (conversion == 'x' || conversion ==  'X') && 
 			flag.prec.on && !flag.prec.val)
 		*str = '\0';
-	if (value == 0 && flag.prec.on && !flag.prec.val)
+	if ((int)value == 0 && flag.prec.on && !flag.prec.val)
 		*str = ' ';
-	if (value == 0 && flag.prec.on && !flag.prec.val &&
+	if ((int)value == 0 && flag.prec.on && !flag.prec.val &&
 			(!flag.width.val || flag.sign))
 		*str = '\0';
 	ft_printflag(str, flag, conversion, nbr_pc);
