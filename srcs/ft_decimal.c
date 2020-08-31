@@ -6,28 +6,42 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/28 13:50:53 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/29 21:56:21 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/30 18:55:02 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static void	ft_printnumber_fd(long long number, int fd)
+/*static void	ft_printnumber_fd(long long number, int fd)
 {
 	if (number >= 10)
 		ft_printnumber_fd(number / 10, fd);
 	ft_putchar_fd(number % 10 + '0', fd);
 }
-/*static void	ft_printnumber_base_fd(long long number, char *digitsbase, int fd)
+*/
+
+static void	ft_printNumberBase_fd(long long number, char *digitsbase, int fd)
 {
 	unsigned int base;
 
 	base = ft_strlen(digitsbase);
 	if (number >= base)
-		ft_printnumber_base_fd(number / base, digitsbase, fd);
+		ft_printNumberBase_fd(number / base, digitsbase, fd);
 	ft_putchar_fd(digitsbase[number % base], fd);
-}*/
-static void	ft_printPrefix(t_flags flag)
+}
+
+static void	ft_printPrefix_hexadecimal(t_flags flag)
+{
+	if (flag.hasht && !flag.valueZero.on)
+	{
+		if (flag.conversion == 'x')
+			ft_putstr_fd("0x", 1);
+		if (flag.conversion == 'X')
+			ft_putstr_fd("0X", 1);
+	}
+}
+
+static void	ft_printPrefix_decimal(t_flags flag)
 {
 	if (flag.negative)
 		ft_putchar_fd('-',1);
@@ -49,7 +63,7 @@ static void	ft_printAll(t_flags flag,
 	while (flag.prec.val--)
 		ft_putchar_fd('0', 1);
 	if (!flag.valueZero.on)
-		ft_printnumber_fd(value, 1);
+		function.printNumberBase(value, function.base, 1);
 	else if (flag.valueZero.val)
 		ft_putchar_fd(flag.valueZero.val, 1);
 	if (flag.justify)
@@ -71,6 +85,7 @@ static void	ft_calculatePadded(t_flags *flag,
 	unsigned int	prefix;
 
 	prefix = (flag->negative || flag->sign || flag->space) ? 1 : 0;
+	prefix = (flag->hasht && !flag->valueZero.on) ? 2 : prefix;
 	if (flag->prec.val > len)
 		flag->prec.val -= len;
 	else
@@ -85,14 +100,14 @@ static void	ft_calculatePadded(t_flags *flag,
 
 }
 
-static int	ft_countDigits(long long int number, unsigned int base)
+static int	ft_countDigits(long long int number, unsigned int sizeBase)
 {
 	unsigned int	digits;
 
 	digits = 1;
-	while (number >= base)
+	while (number >= sizeBase)
 	{
-		number = number / base;
+		number = number / sizeBase;
 		digits++;
 	}
 	return (digits);
@@ -115,7 +130,7 @@ static unsigned int ft_analizeZeroCase(t_flags *flag)
 	return (1);
 }
 
-long long int ft_correctSize(t_flags *flag, long long int number)
+long long int ft_correctSize_signedDecimal(t_flags *flag, long long int number)
 {
 	if (flag->ll)
 		number = (long long int)number;
@@ -129,23 +144,57 @@ long long int ft_correctSize(t_flags *flag, long long int number)
 	return (number);
 }
 
-void		ft_setFunction(t_function *function)
+long long int ft_correctSize_unsignedDecimal(t_flags *flag, long long int number)
 {
-	function->correctSize = ft_correctSize;
-	function->countDigits= ft_countDigits;
-	function->printPrefix = ft_printPrefix;
+	if (flag->ll)
+		number = (unsigned long long int)number;
+	else if (flag->l)
+		number = (unsigned long int)number;
+	else
+		number = (unsigned int)number;
+	return (number);
 }
 
-void		ft_decimal(va_list args, t_flags flag, unsigned int *nbr_pc)
+void		ft_setFunction_decimal(t_function *function, 
+					long long int (*correctSize)())
+{
+	function->correctSize = correctSize;
+	function->countDigits= ft_countDigits;
+	function->printPrefix = ft_printPrefix_decimal;
+	function->printNumberBase = ft_printNumberBase_fd;
+	function->base = "0123456789";
+	function->sizeBase = 10;
+}
+
+void		ft_setFunction_hexadecimal(t_function *function, char conversion)
+{
+	function->correctSize = ft_correctSize_unsignedDecimal;
+	function->countDigits= ft_countDigits;
+	function->printPrefix = ft_printPrefix_hexadecimal;
+	function->printNumberBase = ft_printNumberBase_fd;
+	if (conversion == 'x')
+		function->base = "0123456789abcdef";
+	else
+		function->base = "0123456789ABCDEF";
+	function->sizeBase = 16;
+}
+
+void		ft_number(va_list args,
+						t_flags flag,
+						unsigned int *nbr_pc)
 {
 	t_function		function;
 	long long int	number;
 	unsigned int	digits;
 	
-
-	ft_setFunction(&function);
+	if (flag.conversion == 'd' || flag.conversion == 'i')
+		ft_setFunction_decimal(&function, &ft_correctSize_signedDecimal);
+	if (flag.conversion == 'u')
+		ft_setFunction_decimal(&function, &ft_correctSize_unsignedDecimal);
+	if (flag.conversion == 'x' || flag.conversion == 'X')
+		ft_setFunction_hexadecimal(&function, flag.conversion);
 	number = function.correctSize(&flag, va_arg(args,long long int));
-	digits = function.countDigits(number, 10);
+	digits = function.countDigits(number, function.sizeBase);
 	if ((int)number == 0)
 		digits = ft_analizeZeroCase(&flag);
 	ft_calculatePadded(&flag, digits, nbr_pc);

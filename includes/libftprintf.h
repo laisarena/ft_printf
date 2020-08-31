@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 13:19:50 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/29 21:45:10 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/30 18:44:02 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct
 
 typedef	struct
 {
+	unsigned int	conversion;
 	unsigned int	zero;
 	unsigned int	justify;
 	unsigned int	sign;
@@ -42,8 +43,11 @@ typedef	struct
 typedef	struct
 {
 	long long int	(*correctSize)(t_flags *flag, long long int number);
-	int				(*countDigits)(long long int number, unsigned int base);
+	int				(*countDigits)(long long int number, unsigned int sizeBase);
 	void			(*printPrefix)(t_flags flag);
+	void			(*printNumberBase)(long long int number, char *base, int fd);
+	char			*base;
+	unsigned int	sizeBase;
 }					t_function;
 
 int					ft_printf(const char *format, ...);
@@ -53,5 +57,5 @@ void				ft_s(const char *str, t_flags flag, unsigned int *nbr_pc);
 void				ft_p(va_list args, t_flags flag, unsigned int *nbr_pc);
 void				ft_integers(va_list args, t_flags flag, unsigned int *nbr_p,
 								char conversion);
-void				ft_decimal(va_list args, t_flags flag, unsigned int *nbr_p);
+void				ft_number(va_list args, t_flags flag, unsigned int *nbr_pc);
 #endif

@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/28 15:38:21 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/08/30 18:38:48 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	ft_printarg(const char *format, va_list args, unsigned int *nbr_pc)
 		return (0);
 	flag = ft_treatformatting(ft_substr(format, 0, position), args);
 	format += position - 1;
+	flag.conversion = *format;
 	if (*format == '%')
 		ft_s(ft_substr(format, 0, 1), flag, nbr_pc);
 	if (*format == 'c')
@@ -48,10 +49,10 @@ static int	ft_printarg(const char *format, va_list args, unsigned int *nbr_pc)
 		ft_s(va_arg(args, char *), flag, nbr_pc);
 	if (*format == 'p')
 		ft_p(args, flag, nbr_pc);
-	if (*format == 'd' || *format == 'i')
-		ft_decimal(args, flag, nbr_pc);
-	if (*format == 'u' || *format == 'x' || *format == 'X')
-		ft_integers(args, flag, nbr_pc, *format);
+	if (*format == 'd' || *format == 'i'|| *format == 'u' ||
+			*format == 'x' || *format == 'X')
+		ft_number(args, flag, nbr_pc);
+		//ft_integers(args, flag, nbr_pc, *format);
 	return (position);
 }
 
