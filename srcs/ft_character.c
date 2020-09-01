@@ -6,13 +6,13 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:27:15 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 20:22:48 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/01 13:13:35 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void	ft_c(va_list args, t_flags flag, unsigned int *nbr_pc)
+void	ft_character(va_list args, t_flags flag, unsigned int *nbr_pc)
 {
 	unsigned int c;
 

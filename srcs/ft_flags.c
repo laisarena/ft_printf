@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/29 19:59:06 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/01 11:04:26 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_setflags(t_flags *flag)
 	flag->justify = 0;
 	flag->sign = 0;
 	flag->space = 0;
-	flag->hasht = 0;
+	flag->hash = 0;
 	flag->l = 0;
 	flag->ll = 0;
 	flag->h = 0;
@@ -27,11 +27,11 @@ static void	ft_setflags(t_flags *flag)
 	flag->width.val = 0;
 	flag->prec.on = 0;
 	flag->prec.val = 0;
-	flag->valueZero.on = 0;
-	flag->valueZero.val = '0';
+	flag->zeroexception.on = 0;
+	flag->zeroexception.val = '0';
 }
 
-static char	*ft_lenflags(char *strflag, t_flags *flag)
+static char	*ft_lenthflags(char *strflag, t_flags *flag)
 {
 	if (*strflag)
 	{
@@ -93,7 +93,7 @@ static char	*ft_width(char *strflag, t_flags *flag, va_list args)
 	return (strflag);
 }
 
-static char	*ft_checkflags(char *strflag, t_flags *flag)
+static char	*ft_characterheckflags(char *strflag, t_flags *flag)
 {
 	while (*strflag == '-' || *strflag == '0' || *strflag == '+'
 				|| *strflag == ' ' || *strflag == '#')
@@ -107,7 +107,7 @@ static char	*ft_checkflags(char *strflag, t_flags *flag)
 		if (*strflag == ' ')
 			flag->space = 1;
 		if (*strflag == '#')
-			flag->hasht = 1;
+			flag->hash = 1;
 		strflag++;
 	}
 	return (strflag);
@@ -115,21 +115,26 @@ static char	*ft_checkflags(char *strflag, t_flags *flag)
 
 /*
 ** A flag zero é ignorada quando tem precision
-**A flag space é ignorada quando tem +
+** A flag space é ignorada quando tem +
 */
+
+static void	ft_dealcombinations(t_flags *flag)
+{
+	if (flag->prec.on)
+		flag->zero = 0;
+	if (flag->sign)
+		flag->space = 0;
+}
 
 t_flags		ft_treatformatting(char *strflag, va_list args)
 {
 	t_flags flag;
 
 	ft_setflags(&flag);
-	strflag = ft_checkflags(strflag, &flag);
+	strflag = ft_characterheckflags(strflag, &flag);
 	strflag = ft_width(strflag, &flag, args);
 	strflag = ft_precision(strflag, &flag, args);
-	strflag = ft_lenflags(strflag, &flag);
-	if (flag.prec.on)
-		flag.zero = 0;
-	if (flag.sign)
-		flag.space = 0;
+	strflag = ft_lenthflags(strflag, &flag);
+	ft_dealcombinations(&flag);
 	return (flag);
 }

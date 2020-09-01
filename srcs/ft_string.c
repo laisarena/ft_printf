@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:51:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/20 20:34:00 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/01 13:18:45 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*ft_strnull(void)
 	return (str);
 }
 
-void		ft_s(const char *str, t_flags flag, unsigned int *nbr_pc)
+void		ft_string(const char *str, t_flags flag, unsigned int *nbr_pc)
 {
 	unsigned int	len;
 

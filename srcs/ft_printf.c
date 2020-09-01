@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/08/31 09:28:44 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/02 14:16:14 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int	ft_conversionposition(const char *s)
 	return (position);
 }
 
-static int	ft_printarg(const char *format, va_list args, unsigned int *nbr_pc)
+static const char	*ft_analizeconversion(const char *format, va_list args,
+											unsigned int *totalprinted)
 {
 	int		position;
 	t_flags	flag;
@@ -42,42 +43,40 @@ static int	ft_printarg(const char *format, va_list args, unsigned int *nbr_pc)
 	format += position - 1;
 	flag.conversion = *format;
 	if (*format == '%')
-		ft_s(ft_substr(format, 0, 1), flag, nbr_pc);
+		ft_string(ft_substr(format, 0, 1), flag, totalprinted);
 	if (*format == 'c')
-		ft_c(args, flag, nbr_pc);
+		ft_character(args, flag, totalprinted);
 	if (*format == 's')
-		ft_s(va_arg(args, char *), flag, nbr_pc);
-	if (*format == 'p')
-		ft_number(args, flag, nbr_pc);
-		//ft_p(args, flag, nbr_pc);
-	if (*format == 'd' || *format == 'i'|| *format == 'u' ||
-			*format == 'x' || *format == 'X')
-		ft_number(args, flag, nbr_pc);
-		//ft_integers(args, flag, nbr_pc, *format);
-	return (position);
+		ft_string(va_arg(args, char *), flag, totalprinted);
+	if (*format == 'd' || *format == 'i' || *format == 'u' ||
+		*format == 'x' || *format == 'X' || *format == 'p')
+		ft_number(args, flag, totalprinted);
+	return (format);
+}
+
+static void	ft_analizeformat(const char *format, va_list args,
+								unsigned int *totalprinted)
+{
+	while (*format)
+	{
+		if (*format == '%')
+			format = ft_analizeconversion(format, args, totalprinted) + 1;
+		else
+		{
+			ft_putchar_fd(*format++, 1);
+			(*totalprinted)++;
+		}
+	}
 }
 
 int			ft_printf(const char *format, ...)
 {
-	unsigned int	nbr_pc;
+	unsigned int	totalprinted;
 	va_list			args;
 
-	nbr_pc = 0;
+	totalprinted = 0;
 	va_start(args, format);
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			if (!(format += ft_printarg(format, args, &nbr_pc)))
-				return (0);
-		}
-		else
-		{
-			ft_putchar_fd(*format, 1);
-			nbr_pc++;
-		}
-		format++;
-	}
+	ft_analizeformat(format, args, &totalprinted);
 	va_end(args);
-	return (nbr_pc);
+	return (totalprinted);
 }

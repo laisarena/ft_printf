@@ -6,7 +6,7 @@
 #    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/08/29 21:55:53 by laisarena        ###   ########.fr        #
+#    Updated: 2020/09/01 13:50:11 by laisarena        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,12 @@ PATH_LIBFT = ./libft/
 PATH_SRCS = ./srcs/
 
 SRCS = ft_printf.c\
-	ft_flags.c\
-	ft_c.c\
-	ft_s.c\
-	ft_pointer.c\
-	ft_integers.c\
-	ft_decimal.c\
+	   ft_flags.c\
+	   ft_character.c\
+	   ft_string.c\
+	   ft_number.c\
+	   ft_decimal.c\
+	   ft_pointer.c\
 
 OBJS = $(addprefix $(PATH_SRCS),$(SRCS:.c=.o))
 
