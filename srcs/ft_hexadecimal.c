@@ -1,36 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_decimal.c                                       :+:      :+:    :+:   */
+/*   ft_hexadecimal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/28 13:50:53 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/02 15:10:04 by laisarena        ###   ########.fr       */
+/*   Created: 2020/09/02 14:50:43 by laisarena         #+#    #+#             */
+/*   Updated: 2020/09/02 14:55:25 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static void	ft_printprefix_decimal(t_flags flag)
+static void	ft_printprefix_hexadecimal(t_flags flag)
 {
-	if (flag.negative)
-		ft_putchar_fd('-', 1);
-	else if (flag.sign)
-		ft_putchar_fd('+', 1);
-	else if (flag.space)
-		ft_putchar_fd(' ', 1);
+	if (flag.hash && !flag.zeroexception.on)
+	{
+		if (flag.conversion == 'x' || flag.conversion == 'p')
+			ft_putstr_fd("0x", 1);
+		if (flag.conversion == 'X')
+			ft_putstr_fd("0X", 1);
+	}
+	else if (flag.conversion == 'p')
+		ft_putstr_fd("0x", 1);
 }
 
-t_function	ft_setdecimalfunctions(long long int (*correctsize)())
+t_function	ft_sethexadecimalfunctions(char conversion,
+										long long int (*correctsize)())
 {
 	t_function	function;
 
 	function.correctsize = correctsize;
 	function.numberdigits = ft_numberdigits;
-	function.printprefix = ft_printprefix_decimal;
+	function.printprefix = ft_printprefix_hexadecimal;
 	function.printnumberbase = ft_printnumberbase_fd;
-	function.base = "0123456789";
-	function.sizebase = 10;
+	if (conversion == 'x' || conversion == 'p')
+		function.base = "0123456789abcdef";
+	else
+		function.base = "0123456789ABCDEF";
+	function.sizebase = 16;
 	return (function);
 }

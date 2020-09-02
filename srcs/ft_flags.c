@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/01 11:04:26 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/02 15:33:26 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static char	*ft_width(char *strflag, t_flags *flag, va_list args)
 	return (strflag);
 }
 
-static char	*ft_characterheckflags(char *strflag, t_flags *flag)
+static char	*ft_checkflags(char *strflag, t_flags *flag)
 {
 	while (*strflag == '-' || *strflag == '0' || *strflag == '+'
 				|| *strflag == ' ' || *strflag == '#')
@@ -131,7 +131,7 @@ t_flags		ft_treatformatting(char *strflag, va_list args)
 	t_flags flag;
 
 	ft_setflags(&flag);
-	strflag = ft_characterheckflags(strflag, &flag);
+	strflag = ft_checkflags(strflag, &flag);
 	strflag = ft_width(strflag, &flag, args);
 	strflag = ft_precision(strflag, &flag, args);
 	strflag = ft_lenthflags(strflag, &flag);

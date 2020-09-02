@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 13:19:50 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/01 16:04:13 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/02 15:07:39 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,17 @@ void				ft_string(const char *str,
 void				ft_p(va_list args, t_flags flag, unsigned int *nbr_pc);
 void				ft_integers(va_list args, t_flags flag, unsigned int *nbr_p,
 								char conversion);
-void				ft_number(va_list args, t_flags flag, unsigned int *nbr_pc);
+void				ft_number(va_list args, t_flags flag,
+								unsigned int *totalprinted);
 t_function			ft_setdecimalfunctions(long long int (*correctsize)());
 t_function			ft_sethexadecimalfunctions(char conversion,
 												long long int (*correctsize)());
+void				ft_printall(t_flags flag, long long value,
+								t_function function);
+void				ft_calculatepadded(t_flags *flag, unsigned int len,
+										unsigned int *totalprinted);
+void				ft_printnumberbase_fd(long long number,
+											char *digitsbase, int fd);
+unsigned int		ft_numberdigits(t_flags *flag, long long int number,
+										unsigned int sizebase);
 #endif

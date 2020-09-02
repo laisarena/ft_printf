@@ -6,13 +6,13 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/02 14:16:14 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/02 14:23:00 by laisarena        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static int	ft_isconversion(char c)
+static int			ft_isconversion(char c)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u' ||
 			c == 'x' || c == 'X' || c == '%')
@@ -20,7 +20,7 @@ static int	ft_isconversion(char c)
 	return (0);
 }
 
-static int	ft_conversionposition(const char *s)
+static int			ft_conversionposition(const char *s)
 {
 	int position;
 
@@ -54,8 +54,8 @@ static const char	*ft_analizeconversion(const char *format, va_list args,
 	return (format);
 }
 
-static void	ft_analizeformat(const char *format, va_list args,
-								unsigned int *totalprinted)
+static void			ft_analizeformat(const char *format, va_list args,
+										unsigned int *totalprinted)
 {
 	while (*format)
 	{
@@ -69,7 +69,7 @@ static void	ft_analizeformat(const char *format, va_list args,
 	}
 }
 
-int			ft_printf(const char *format, ...)
+int					ft_printf(const char *format, ...)
 {
 	unsigned int	totalprinted;
 	va_list			args;
