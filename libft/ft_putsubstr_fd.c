@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_character.c                                     :+:      :+:    :+:   */
+/*   ft_putsubstr_fd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/13 16:27:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2020/09/03 12:07:28 by lfrasson         ###   ########.fr       */
+/*   Created: 2020/09/03 17:20:39 by lfrasson          #+#    #+#             */
+/*   Updated: 2020/09/03 17:31:22 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
-void	ft_character(unsigned int c, t_flags flag, unsigned int *totalprinted)
+void	ft_putsubstr_fd(const char *s, unsigned int start, size_t len, int fd)
 {
-	*totalprinted += (flag.width.val == 0) ? 1 : flag.width.val;
-	if (flag.justify)
-		ft_putchar_fd(c, 1);
-	while (flag.width.val && flag.width.val-- != 1)
-		ft_putchar_fd(' ', 1);
-	if (!flag.justify)
-		ft_putchar_fd(c, 1);
+	if (!s)
+		return ;
+	while (s[start] && start < len)
+		ft_putchar_fd(s[start++], fd);
 }

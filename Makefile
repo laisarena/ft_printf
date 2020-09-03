@@ -6,7 +6,7 @@
 #    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/09/02 15:05:43 by laisarena        ###   ########.fr        #
+#    Updated: 2020/09/03 17:05:58 by lfrasson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,11 @@ PATH_SRCS = ./srcs/
 
 SRCS = ft_printf.c\
 	   ft_flags.c\
+	   ft_flagsaux.c\
 	   ft_character.c\
 	   ft_string.c\
 	   ft_number.c\
-	   ft_auxnumberfunctions.c\
+	   ft_numberaux.c\
 	   ft_printnumber.c\
 	   ft_decimal.c\
 	   ft_hexadecimal.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hexadecimal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/02 14:50:43 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/02 14:55:25 by laisarena        ###   ########.fr       */
+/*   Created: 2020/09/02 14:50:43 by lfrasson          #+#    #+#             */
+/*   Updated: 2020/09/03 13:46:37 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void	ft_printprefix_hexadecimal(t_flags flag)
 		ft_putstr_fd("0x", 1);
 }
 
-t_function	ft_sethexadecimalfunctions(char conversion,
-										long long int (*correctsize)())
+t_function	ft_sethexafunctions(char conversion, long long int (*correctsize)())
 {
 	t_function	function;
 

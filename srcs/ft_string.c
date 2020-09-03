@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_s.c                                             :+:      :+:    :+:   */
+/*   ft_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/13 16:51:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/01 13:18:45 by laisarena        ###   ########.fr       */
+/*   Created: 2020/08/13 16:51:28 by lfrasson          #+#    #+#             */
+/*   Updated: 2020/09/03 17:30:35 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** it is padded with spaces
 */
 
-static char	*ft_strnull(void)
+static char		*ft_strnull(void)
 {
 	char *str;
 
@@ -35,31 +35,44 @@ static char	*ft_strnull(void)
 	return (str);
 }
 
-void		ft_string(const char *str, t_flags flag, unsigned int *nbr_pc)
+static void		ft_printwidth(t_flags flag)
+{
+	if (!flag.justify && flag.zero)
+		ft_putchar_fd('0', 1);
+	else
+		ft_putchar_fd(' ', 1);
+}
+
+static void		ft_printstring(t_flags flag, const char *str, unsigned int len)
+{
+	if (flag.justify)
+		ft_putsubstr_fd(str, 0, len, 1);
+	while (flag.width.val--)
+		ft_printwidth(flag);
+	if (!flag.justify)
+		ft_putsubstr_fd(str, 0, len, 1);
+}
+
+static void		ft_calculatestringpadded(t_flags *flag, unsigned int *len,
+										unsigned int *totalprinted)
+{
+	if (flag->prec.on && flag->prec.val < *len)
+		*len = flag->prec.val;
+	if (flag->width.val > *len)
+		flag->width.val -= *len;
+	else
+		flag->width.val = 0;
+	*totalprinted += flag->width.val + *len;
+}
+
+void			ft_string(const char *str, t_flags flag,
+							unsigned int *totalprinted)
 {
 	unsigned int	len;
 
 	if (!str)
 		str = ft_strnull();
-	if (str)
-	{
-		len = ft_strlen(str);
-		if (flag.prec.on && flag.prec.val < len)
-		{
-			len = flag.prec.val;
-			str = ft_substr(str, 0, len);
-		}
-		if (flag.justify)
-			ft_putstr_fd((char *)str, 1);
-		*nbr_pc += (flag.width.val > len) ? flag.width.val : len;
-		while (flag.width.val > len && flag.width.val--)
-		{
-			if (!flag.justify && flag.zero)
-				ft_putchar_fd('0', 1);
-			else
-				ft_putchar_fd(' ', 1);
-		}
-		if (!flag.justify)
-			ft_putstr_fd((char *)str, 1);
-	}
+	len = ft_strlen(str);
+	ft_calculatestringpadded(&flag, &len, totalprinted);
+	ft_printstring(flag, str, len);
 }

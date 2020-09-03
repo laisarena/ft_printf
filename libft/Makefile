@@ -6,7 +6,7 @@
 #    By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 12:16:07 by lfrasson          #+#    #+#              #
-#    Updated: 2020/08/17 10:49:54 by laisarena        ###   ########.fr        #
+#    Updated: 2020/09/03 17:28:00 by lfrasson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS = ft_atoi.c\
 	   ft_putendl_fd.c\
 	   ft_putnbr_fd.c\
 	   ft_putstr_fd.c\
+	   ft_putsubstr_fd.c\
 	   ft_split.c\
 	   ft_strdup.c\
 	   ft_strchr.c\

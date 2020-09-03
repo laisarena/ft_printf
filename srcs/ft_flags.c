@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_flags.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/15 12:59:47 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/02 15:33:26 by laisarena        ###   ########.fr       */
+/*   Created: 2020/08/15 12:59:47 by lfrasson          #+#    #+#             */
+/*   Updated: 2020/09/03 11:29:49 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,52 +45,6 @@ static char	*ft_lenthflags(char *strflag, t_flags *flag)
 			flag->h = 1;
 	}
 	return (++strflag);
-}
-
-static char	*ft_precision(char *strflag, t_flags *flag, va_list args)
-{
-	int		value;
-
-	if (*strflag == '.')
-	{
-		flag->prec.on = 1;
-		while (ft_isdigit(*(++strflag)))
-			flag->prec.val = flag->prec.val * 10 + *strflag - '0';
-		if (*strflag == '*')
-		{
-			if ((value = va_arg(args, int)) < 0)
-			{
-				flag->prec.on = 0;
-				flag->prec.val = 0;
-			}
-			else
-				flag->prec.val = value;
-			strflag++;
-		}
-	}
-	return (strflag);
-}
-
-static char	*ft_width(char *strflag, t_flags *flag, va_list args)
-{
-	int		value;
-
-	if (ft_isdigit(*strflag) || *strflag == '*')
-		flag->width.on = 1;
-	while (ft_isdigit(*strflag))
-		flag->width.val = flag->width.val * 10 + *strflag++ - '0';
-	if (*strflag == '*')
-	{
-		if ((value = va_arg(args, int)) < 0)
-		{
-			flag->justify = 1;
-			flag->width.val = -value;
-		}
-		else
-			flag->width.val = value;
-		strflag++;
-	}
-	return (strflag);
 }
 
 static char	*ft_checkflags(char *strflag, t_flags *flag)
@@ -132,8 +86,7 @@ t_flags		ft_treatformatting(char *strflag, va_list args)
 
 	ft_setflags(&flag);
 	strflag = ft_checkflags(strflag, &flag);
-	strflag = ft_width(strflag, &flag, args);
-	strflag = ft_precision(strflag, &flag, args);
+	strflag = ft_width_precision(strflag, &flag, args);
 	strflag = ft_lenthflags(strflag, &flag);
 	ft_dealcombinations(&flag);
 	return (flag);
