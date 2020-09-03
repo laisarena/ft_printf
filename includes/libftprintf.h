@@ -6,7 +6,7 @@
 /*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 13:19:50 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/02 15:07:39 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/03 17:12:07 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,19 @@ typedef	struct
 
 int					ft_printf(const char *format, ...);
 t_flags				ft_treatformatting(char *strflag, va_list args);
-void				ft_character(va_list args,
-									t_flags flag, unsigned int *nbr_pc);
-void				ft_string(const char *str,
-									t_flags flag, unsigned int *nbr_pc);
-void				ft_p(va_list args, t_flags flag, unsigned int *nbr_pc);
-void				ft_integers(va_list args, t_flags flag, unsigned int *nbr_p,
-								char conversion);
+char				*ft_width_precision(char *strflag, t_flags *flag,
+										va_list args);
+void				ft_character(unsigned int c, t_flags flag,
+								unsigned int *totalprinted);
+void				ft_string(const char *str, t_flags flag,
+								unsigned int *totalprinted);
+void				ft_integers(va_list args, t_flags flag,
+								unsigned int *totalprinted, char conversion);
 void				ft_number(va_list args, t_flags flag,
 								unsigned int *totalprinted);
 t_function			ft_setdecimalfunctions(long long int (*correctsize)());
-t_function			ft_sethexadecimalfunctions(char conversion,
-												long long int (*correctsize)());
+t_function			ft_sethexafunctions(char conversion,
+										long long int (*correctsize)());
 void				ft_printall(t_flags flag, long long value,
 								t_function function);
 void				ft_calculatepadded(t_flags *flag, unsigned int len,

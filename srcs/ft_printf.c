@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/13 16:02:42 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/02 14:23:00 by laisarena        ###   ########.fr       */
+/*   Created: 2020/08/13 16:02:42 by lfrasson          #+#    #+#             */
+/*   Updated: 2020/09/03 12:05:13 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ static const char	*ft_analizeconversion(const char *format, va_list args,
 	t_flags	flag;
 
 	if (!(position = ft_conversionposition(format++)))
-		return (0);
+		return (format);
 	flag = ft_treatformatting(ft_substr(format, 0, position), args);
 	format += position - 1;
 	flag.conversion = *format;
 	if (*format == '%')
 		ft_string(ft_substr(format, 0, 1), flag, totalprinted);
 	if (*format == 'c')
-		ft_character(args, flag, totalprinted);
+		ft_character(va_arg(args, unsigned int), flag, totalprinted);
 	if (*format == 's')
 		ft_string(va_arg(args, char *), flag, totalprinted);
 	if (*format == 'd' || *format == 'i' || *format == 'u' ||

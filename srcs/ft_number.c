@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_number.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/16 10:31:28 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/02 15:24:16 by laisarena        ###   ########.fr       */
+/*   Created: 2020/08/16 10:31:28 by lfrasson          #+#    #+#             */
+/*   Updated: 2020/09/03 16:49:59 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-
-/*
-** PRECISION - the minimum number of digits to be printed for
-**					d, i, o, u, x, and X conversions
-**  - When '0' and precision, '0' is ignored.
-**  - The sign of the number is not include on precision size
-*/
 
 static long long int	ft_correctsize_signed(t_flags *flag,
 												long long int number)
@@ -61,8 +54,7 @@ static t_function		ft_setfunctions(t_function *function, t_flags f)
 	if (f.conversion == 'u')
 		return (ft_setdecimalfunctions(&ft_correctsize_unsigned));
 	if (f.conversion == 'x' || f.conversion == 'X' || f.conversion == 'p')
-		return (ft_sethexadecimalfunctions(f.conversion,
-				&ft_correctsize_unsigned));
+		return (ft_sethexafunctions(f.conversion, &ft_correctsize_unsigned));
 	return (*function);
 }
 

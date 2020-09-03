@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_auxnumberfunctions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laisarena <marvin@42.fr>                   +#+  +:+       +#+        */
+/*   By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/02 14:57:39 by laisarena         #+#    #+#             */
-/*   Updated: 2020/09/02 15:09:02 by laisarena        ###   ########.fr       */
+/*   Created: 2020/09/02 14:57:39 by lfrasson          #+#    #+#             */
+/*   Updated: 2020/09/03 17:04:04 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

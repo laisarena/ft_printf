@@ -6,7 +6,7 @@
 /*   By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 10:20:36 by lfrasson          #+#    #+#             */
-/*   Updated: 2020/08/16 16:33:33 by laisarena        ###   ########.fr       */
+/*   Updated: 2020/09/03 17:30:05 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct		s_list
 
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
+void				ft_putsubstr_fd(const char *s, unsigned int start,
+									size_t len, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
