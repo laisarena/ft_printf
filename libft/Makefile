@@ -6,7 +6,7 @@
 #    By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/28 12:16:07 by lfrasson          #+#    #+#              #
-#    Updated: 2020/09/03 17:28:00 by lfrasson         ###   ########.fr        #
+#    Updated: 2020/09/04 10:34:03 by lfrasson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,6 @@ SRCS = ft_atoi.c\
 	   ft_isprint.c\
 	   ft_isspace.c\
 	   ft_itoa.c\
-	   ft_utoa.c\
-	   ft_itoa_base.c\
-	   ft_utoa_base.c\
-	   ft_ultoa_base.c\
 	   ft_memchr.c\
 	   ft_memcmp.c\
 	   ft_memcpy.c\
