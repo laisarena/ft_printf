@@ -6,22 +6,11 @@
 /*   By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:19:15 by lfrasson          #+#    #+#             */
-/*   Updated: 2020/09/04 13:17:11 by lfrasson         ###   ########.fr       */
+/*   Updated: 2020/02/18 13:33:40 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** The Function converts an integer value to a null-terminated string.
-** Parameters:
-**	n − Value to be converted to a string.
-** Return Value:
-**	A pointer to the resulting null-terminated string with the converted number.
-** Details
-**	If value is negative, the resulting string is preceded with a minus
-**	sign (-).
-*/
 
 static int	ft_countdigits(long l, int sign)
 {

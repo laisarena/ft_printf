@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: laisarena <marvin@42.fr>                   +#+  +:+       +#+         #
+#    By: lfrasson <lfrasson@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/08/13 16:46:22 by laisarena         #+#    #+#              #
-#    Updated: 2020/09/03 17:05:58 by lfrasson         ###   ########.fr        #
+#    Created: 2020/08/13 16:46:22 by lfrasson          #+#    #+#              #
+#    Updated: 2020/09/04 13:29:25 by lfrasson         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,11 +57,4 @@ fclean: clean
 
 re:	fclean all
 
-test:
-	gcc $(FLAGS) ../testePrintf/testes/*.c -L. -lftprintf  -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
-testg:
-	gcc -g $(FLAGS) ../testePrintf/testes/*.c ./srcs/*.c -L. -lftprintf -L$(PATH_LIBFT) -lft -I$(PATH_INCLUDE) && ./a.out
-
-testf:
-	gcc  ../testePrintf/testes/*.c -L. -lftprintf -I$(PATH_INCLUDE) && ./a.out
 .PHONY: all clean fclean re

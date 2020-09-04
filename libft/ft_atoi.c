@@ -6,23 +6,11 @@
 /*   By: lfrasson <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:43:58 by lfrasson          #+#    #+#             */
-/*   Updated: 2020/09/04 13:16:42 by lfrasson         ###   ########.fr       */
+/*   Updated: 2020/02/18 18:06:35 by lfrasson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/*
-** Function that converts the string argument str to an integer (type int)
-** Parameters:
-**	str − This is the string representation of an integral number.
-** Return Value:
-** 	This function returns the converted integral number as an int value.
-** 	If no valid conversion could be performed, it returns zero.
-** Details
-**	The function ignores any white-space before the sign or number character
-**	The function considers + and - signs
-*/
 
 int	ft_atoi(const char *str)
 {
